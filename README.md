@@ -26,7 +26,7 @@
 
 ###
 
-<p align="left">I'm Nihil<br><br>- ⚡ Welcome to BOREALIS. BOREALIS is a 3D game. My aim with BOREALIS was to make a fun and engaging game with a recreated version of the famous Valve GoldSource enging<br>- 📚 BOREALIS aims to tell a story. It also aims to be a fun and engaging game that will remain OPEN SOURCE for everyone.<br>- 
+<p align="left">I'm Nihil<br><br> ⚡ Welcome to BOREALIS. BOREALIS is a 3D game. My aim with BOREALIS was to make a fun and engaging game with a recreated version of the famous Valve GoldSource enging<br> <br><br>📚 BOREALIS aims to tell a story. It also aims to be a fun and engaging game that will remain OPEN SOURCE for everyone.<br>- 
 ###
 
 
