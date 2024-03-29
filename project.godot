@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Borealis"
-run/main_scene="res://map.tscn"
+run/main_scene="res://Menus/main menu/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 Graphics="*res://Menus/graphics.gd"
 Console="*res://addons/console/Console.gd"
 DebugMenu="*res://addons/debug_menu/debug_menu.tscn"
+
+[display]
+
+window/stretch/mode="canvas_items"
 
 [dotnet]
 
