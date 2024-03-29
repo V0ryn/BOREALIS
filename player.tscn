@@ -1,0 +1,142 @@
+[gd_scene load_steps=17 format=3 uid="uid://dkm1yffwaacux"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_cxh4x"]
+[ext_resource type="Script" path="res://head.gd" id="2_5j3cy"]
+[ext_resource type="PackedScene" uid="uid://cggqb75a8w8r" path="res://addons/debug_menu/debug_menu.tscn" id="3_0rgxc"]
+[ext_resource type="Texture2D" uid="uid://b0k4n4xjvnuvk" path="res://Crosshairs/crosshair002.png" id="4_ureq3"]
+[ext_resource type="PackedScene" uid="uid://da3v4nmk57xl7" path="res://Menus/pause menu/pause_menu.tscn" id="5_c2ore"]
+[ext_resource type="PackedScene" uid="uid://2apwwdxf7yu6" path="res://Menus/settings menu/settings_menu.tscn" id="6_o8asp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_auavm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5mtev"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yq5k0"]
+albedo_color = Color(0.678431, 0.847059, 0.901961, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_ylkn2"]
+material = SubResource("StandardMaterial3D_yq5k0")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_et8rc"]
+albedo_color = Color(0.415686, 0.439216, 0.933333, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l13sl"]
+material = SubResource("StandardMaterial3D_et8rc")
+
+[sub_resource type="Animation" id="Animation_4acmi"]
+resource_name = "RESET"
+
+[sub_resource type="Animation" id="Animation_l4art"]
+resource_name = "SlideToStand"
+length = 0.8
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, -0.362, 0), Vector3(0, 0.32, 0), Vector3(0, 0.64, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ylxcl"]
+resource_name = "StandToSlide"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.64, 0), Vector3(0, -0.362, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_cmna0"]
+_data = {
+"RESET": SubResource("Animation_4acmi"),
+"SlideToStand": SubResource("Animation_l4art"),
+"StandToSlide": SubResource("Animation_ylxcl")
+}
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+floor_block_on_wall = false
+script = ExtResource("1_cxh4x")
+
+[node name="UI" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="Crosshair Container" type="CenterContainer" parent="UI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="crosshair" type="Sprite2D" parent="UI/Crosshair Container"]
+position = Vector2(21, 20)
+scale = Vector2(1.7, 1.7)
+texture = ExtResource("4_ureq3")
+
+[node name="Hitbox" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_auavm")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="Hitbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.999883, 0)
+shape = SubResource("CapsuleShape3D_5mtev")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Hitbox"]
+mesh = SubResource("CapsuleMesh_ylkn2")
+
+[node name="SlideHitbox" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0, -0.499224, -0.499315)
+shape = SubResource("CapsuleShape3D_auavm")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="SlideHitbox"]
+transform = Transform3D(1, 0, 0, 0, 1.18022, 0, 0, 0, 1.01963, 0, 0.244169, 0.790445)
+visible = false
+mesh = SubResource("CapsuleMesh_l13sl")
+
+[node name="Head" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.64, 0)
+script = ExtResource("2_5j3cy")
+
+[node name="Camera3D" type="Camera3D" parent="Head"]
+fov = 90.0
+
+[node name="RayCast3D" type="RayCast3D" parent="Head"]
+unique_name_in_owner = true
+target_position = Vector3(0, 0, -50)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_cmna0")
+}
+
+[node name="CanvasLayer" parent="." instance=ExtResource("3_0rgxc")]
+
+[node name="PauseMenu" parent="." instance=ExtResource("5_c2ore")]
+
+[node name="SettingsMenu" parent="." instance=ExtResource("6_o8asp")]
+visible = false
