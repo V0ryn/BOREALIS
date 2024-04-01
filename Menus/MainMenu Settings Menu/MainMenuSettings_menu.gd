@@ -40,7 +40,7 @@ func _on_fullscreen_button_toggled(toggled_on: bool) -> void:
 			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
 
 func _on_vsync_button_pressed() -> void:
-	if DisplayServer.window_get_vsync_mode() != DisplayServer.VSYNC_ADAPTIVE:
+	if DisplayServer.window_get_vsync_mode() == DisplayServer.VSYNC_ADAPTIVE:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_ADAPTIVE)
 	else:
 		DisplayServer.window_set_vsync_mode(DisplayServer.VSYNC_DISABLED)
